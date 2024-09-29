@@ -1,25 +1,54 @@
-import React from 'react'
-import GoogleLogin from 'react-google-login';
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import violinVideo from '../assets/violin.mp4';
 import logo from '../assets/volley-logo-white.png';
 
-
 const Login = () => {
+  const navigate = useNavigate();
 
-  const responseGoogle = (response) => {
-    console.log('response from google is', response);
-     localStorage.setItem('user', JSON.stringify(response.profileObj));
-     const { name, googleId, imageUrl } = response.profileObj;
+  useEffect(() => {
+    const loadGoogleScript = () => {
+      const script = document.createElement('script');
+      script.src = 'https://accounts.google.com/gsi/client';
+      script.async = true;
+      script.defer = true;
+      document.body.appendChild(script);
+      script.onload = initializeGoogleSignIn;
+    };
 
-     const doc = {
-      _id: googleId,
-      _type: 'user',
-      userName: name,
-      image: imageUrl,
-     }
-  }
+    loadGoogleScript();
+  }, []);
+
+  const initializeGoogleSignIn = () => {
+    window.google.accounts.id.initialize({
+      client_id: process.env.REACT_APP_GOOGLE_API_TOKEN,
+      callback: handleGoogleSignIn
+    });
+  };
+
+  const handleGoogleSignIn = (response) => {
+    const { credential } = response;
+    const payload = credential ? JSON.parse(atob(credential.split('.')[1])) : null;
+    
+    if (payload) {
+      console.log('response from google is', payload);
+      localStorage.setItem('user', JSON.stringify(payload));
+      const { name, sub: googleId, picture: imageUrl } = payload;
+
+      const doc = {
+        _id: googleId,
+        _type: 'user',
+        userName: name,
+        image: imageUrl,
+      }
+      // Here you can add logic to save the user to your backend
+    }
+  };
+
+  const signIn = () => {
+    window.google.accounts.id.prompt();
+  };
 
   return (
     <div className='flex justify-start items-center flex-col h-screen'>
@@ -39,22 +68,13 @@ const Login = () => {
           <img src={logo} width="130px" alt="logo" />
         </div>
         <div className='shadow-2xl'>
-          <GoogleLogin
-            clientId={process.env.REACT_APP_GOOGLE_API_TOKEN}
-            render={(renderProps) => (
-              <button
-                type="button"
-                className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
-                onClick={renderProps.onClick}
-                disabled={renderProps.disabled}
-              >
-                <FcGoogle className='mr-4' /> Sign in with Google
-              </button>
-            )}
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            cookiePolicy='single_host_origin'
-          />
+          <button
+            type="button"
+            className="bg-mainColor flex justify-center items-center p-3 rounded-lg cursor-pointer outline-none"
+            onClick={signIn}
+          >
+            <FcGoogle className='mr-4' /> Sign in with Google
+          </button>
         </div>
       </div>
     </div>
