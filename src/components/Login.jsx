@@ -1,11 +1,16 @@
+
+// Just importing stuff
 import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
 import { FcGoogle } from 'react-icons/fc';
 import violinVideo from '../assets/violin.mp4';
 import logo from '../assets/volley-logo-white.png';
 
+
+// Okay, so this is a function that defines a login component. It includes both our video and the google login component inside it.
 const Login = () => {
-  const navigate = useNavigate();
+
+  // This gets us a magic "navigate" function that we can call with an argument that is a page and then it takes us to that page. It's not called anywhere.
+  // I'm gonna delete it.l
 
   useEffect(() => {
     const loadGoogleScript = () => {
