@@ -15,14 +15,13 @@ const Login = () => {
     const loadGoogleScript = () => {
       // making the script an element is a simple way to load it after the page has already been loaded.
       // by adding it to the dom, we automatically execute the script at https://accounts.google.com/gsi/client
-      // 
+
       const script = document.createElement('script');
       script.src = 'https://accounts.google.com/gsi/client';
       script.async = true;
       script.defer = true;
       document.body.appendChild(script);
       // there's some magic thing where this runs as soon as script is loaded, and it's fine being naked.
-      console.log(' we are about to send off onload initialize googlesignin')
       script.onload = initializeGoogleSignIn;
     };
 
