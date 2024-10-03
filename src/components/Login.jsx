@@ -65,8 +65,8 @@ const Login = () => {
     // with google. client just being like a separate entity that acts as a specialized tool your browser can use
 
     console.log(' were about to call intiialize')
-    console.log(window.google.accounts.id)
-    console.log('Client ID:', process.env.REACT_APP_GOOGLE_API_TOKEN);
+    //console.log(window.google.accounts.id)
+    //console.log('Client ID:', process.env.REACT_APP_GOOGLE_API_TOKEN);
     window.google.accounts.id.initialize({
       client_id: process.env.REACT_APP_GOOGLE_API_TOKEN,
       callback: handleGoogleSignIn
@@ -90,6 +90,8 @@ const Login = () => {
     // grab the credential key. is that correct?
 
     const { credential } = response;
+
+    console.log('response from google is', response)
 
     // this defines a variable called credential, which is the repsonse.credential key
     // this would be more useful if it was like 5 variables
