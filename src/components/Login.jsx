@@ -47,8 +47,11 @@ const Login = () => {
  
     const { credential } = response;
     // semantically equivalent to const credential = response.credential
+    console.log('response is', response)
 
     const payload = credential ? JSON.parse(atob(credential.split('.')[1])) : null;
+
+    console.log('payload is', payload)
 
     if (payload) {
       localStorage.setItem('user', JSON.stringify(payload));
