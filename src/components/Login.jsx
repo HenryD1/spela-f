@@ -4,8 +4,14 @@ import React, { useEffect } from 'react'
 import { FcGoogle } from 'react-icons/fc';
 import violinVideo from '../assets/violin.mp4';
 import logo from '../assets/volley-logo-white.png';
+import { useNavigate } from 'react-router-dom';
+
+import { client } from '../client'
+
 
 const Login = () => {
+
+  const navigate = useNavigate();
 
   // useEffect is a magic function that knows it's in the Login component and then only runs once the Login component
   // has been rendered
@@ -64,6 +70,13 @@ const Login = () => {
         userName: name,
         image: imageUrl,
       }
+
+      client.createIfNotExists(doc)
+      // this file comes from the sanityClient object that we export in client.ts
+        .then(() => {
+          navigate('/', { replace: true})
+          // this navigates us to home, and creates a user in our dashboard.
+        })
     }
   };
 
