@@ -23,11 +23,10 @@ const Sidebar = ( user, closeToggle ) => {
           className= "flex px-5 gap-2 my-6 pt-1 w-190 items-center"
           onClick={handleCloseSidebar}
         >
-        <img scr={logo} alt="logo" className="w-full" />
+        <img src={logo} alt="logo" className="w-full" />
         {console.log("logo to display on line 26 is", logo)}
        </Link>
-     </div>
-     <div className = "flex flex-col gap-5">
+       <div className = "flex flex-col gap-5">
         <NavLink 
           to="/"
           className={( {isActive} ) => isActive ? isActiveStyle : isNotActiveStyle} >
@@ -35,6 +34,8 @@ const Sidebar = ( user, closeToggle ) => {
           Home
         </NavLink>
      </div>
+     </div>
+     
     </div>
   )
 }
