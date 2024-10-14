@@ -1,6 +1,6 @@
 
 // Just importing stuff
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import violinVideo from '../assets/violin.mp4';
 import logo from '../assets/volley-logo-white.png';
